@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- You may freely edit this file. See commented blocks below for -->
+<!-- some examples of how to customize the build. -->
+<!-- (If you delete it and reopen the project it will be recreated.) -->
+<!-- By default, only the Clean and Build commands use this build script. -->
+<!-- Commands such as Run, Debug, and Test only use this build script if -->
+<!-- the Compile on Save feature is turned off for the project. -->
+<!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
+<!-- in the project's Project Properties dialog box.-->
+<project name="Paciencia" default="compila" basedir=".">
+    <description>Builds, tests, and runs the project Paciencia.</description>
+
+<!-- Roda o codigo -->
+   <target name="roda" depends="compila">
+      <java classname="paciencia.Paciencia" >
+          <classpath path="classes" />
+      </java>
+    </target>
+
+<!-- compila codigo -->
+    <target name="compila">
+      <mkdir dir="classes" />
+     
+      <!-- compila codigo -->     
+      <javac includeantruntime="false" srcdir="./src:./test" destdir="classes" >
+        <classpath>
+        <pathelement path="junit-4.10.jar"/>
+    </classpath>
+  </javac>
+          
+    </target>
+
+<!-- constrói codigo -->
+    <target name="constroi" depends="compila">
+       <jar destfile="dist/Paciencia.jar" basedir="classes" includes= "./**"/>
+    </target>
+
+<!-- Limpa codigo -->
+    <target name="limpa" description="Limpa o diretorio classes">
+          <delete dir="classes" />
+          <delete dir="doc" />   
+    </target>
+
+<!-- Documenta codigo -->
+    <target name="doc" depends="compila">
+   <javadoc packagenames="*" sourcepath="src" 
+      destdir="doc" version="true" windowtitle="Paciencia">      
+      <doctitle><![CDATA[= Paciencia =]]></doctitle>      
+      <bottom>
+         <![CDATA[Copyright ©Anderson&Felipe 2015. All Rights Reserved.]]>
+      </bottom>      
+   </javadoc>   
+   <echo message="java doc has been generated!" />
+</target>
+
+
+<!-- Testa (JUNIT) codigo -->
+  <target name="testa">
+    <exec dir="." executable="testa.bat" osfamily="windows">
+         <arg value="testa"/>
+    </exec>
+    
+</target>
+
+</project>
